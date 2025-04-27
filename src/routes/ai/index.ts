@@ -48,20 +48,15 @@ const app = new OpenAPIHono<{ Bindings: Bindings }>().openapi(
     const body = await c.req.parseBody();
     const file = body.file as File;
 
-    try {
-      const buffer = await file.arrayBuffer();
+    const buffer = await file.arrayBuffer();
+    const base64Audio = arrayBufferToBase64(buffer);
 
-      const base64Audio = arrayBufferToBase64(buffer);
+    const result = await c.env.AI.run("@cf/openai/whisper-large-v3-turbo", {
+      audio: base64Audio,
+      language: "pt",
+    });
 
-      const result = await c.env.AI.run("@cf/openai/whisper-large-v3-turbo", {
-        audio: base64Audio,
-        language: "pt",
-      });
-
-      return c.json({ text: result.text }, 200);
-    } catch (error) {
-      throw error;
-    }
+    return c.json({ text: result.text }, 200);
   }
 );
 

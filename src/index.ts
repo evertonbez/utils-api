@@ -1,6 +1,5 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
-import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import type { Bindings } from "./common/bindings";
 import {
@@ -20,7 +19,6 @@ const app = new OpenAPIHono<{ Bindings: Bindings }>({
   },
 });
 
-app.use(cors());
 app.use("*", requestId());
 app.use(authMiddleware);
 app.use(securityMiddleware);
