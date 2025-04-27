@@ -1,7 +1,7 @@
 import type { Bindings } from "@/common/bindings";
 import { ErrorSchema } from "@/common/schema";
 import { Provider } from "@/providers";
-import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
+import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
 import { env } from "hono/adapter";
 import { HealthSchema } from "./schema";
 
@@ -9,6 +9,7 @@ const app = new OpenAPIHono<{ Bindings: Bindings }>().openapi(
   createRoute({
     method: "get",
     path: "/",
+    tags: ["health"],
     summary: "Health",
     responses: {
       200: {
@@ -30,7 +31,7 @@ const app = new OpenAPIHono<{ Bindings: Bindings }>().openapi(
     },
   }),
   async (c) => {
-    const envs: any = env(c);
+    const envs = env(c);
 
     const api = new Provider();
 

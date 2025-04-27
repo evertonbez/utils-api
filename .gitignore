@@ -2,6 +2,7 @@
 
 .dev.vars
 prompts
+.wrangler
 
 # Logs
 
