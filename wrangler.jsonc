@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "engine-app",
+  "main": "src/index.ts",
+  "observability": {
+    "enabled": true
+  },
+  "compatibility_date": "2025-04-12",
+  "compatibility_flags": [
+    "nodejs_compat_v2"
+  ],
+  "env": {
+    "production": {
+      "name": "utils",
+      "route": {
+        "pattern": "utils.everton.place/*",
+        "zone_name": "everton.place"
+      },
+      "ai": {
+        "binding": "AI",
+      }
+    }
+  }
+}

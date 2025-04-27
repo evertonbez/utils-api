@@ -1,0 +1,26 @@
+{
+  "name": "api-cfworkers",
+  "scripts": {
+    "dev": "NODE_ENV=development wrangler dev src/index.ts --port 3002",
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "deploy:prod": "wrangler deploy --minify src/index.ts --env production",
+    "generate:openapi": "bun run .scripts/generate-openapi.ts"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250412.0",
+    "@types/bun": "latest",
+    "@types/node": "^22.15.2",
+    "wrangler": "^4.10.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@hono/swagger-ui": "^0.5.1",
+    "@hono/zod-openapi": "^0.19.4",
+    "@scalar/hono-api-reference": "^0.8.1",
+    "hono": "^4.7.6",
+    "workers-ai-provider": "^0.3.0",
+    "zod": "^3.24.2"
+  }
+}
