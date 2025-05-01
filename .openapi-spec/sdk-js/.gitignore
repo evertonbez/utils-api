@@ -1,9 +1,0 @@
-*
-!codegen.yaml
-!.gitignore
-!yarn.lock
-!package.json
-!tsconfig.json
-!build-sdk.ts
-!codegen.yml
-!client.ts

@@ -20,6 +20,18 @@ const app = new OpenAPIHono<{ Bindings: Bindings }>().openapi(
                 type: "string",
                 format: "binary",
               }),
+              initial_prompt: z.string().optional().openapi({
+                description: "Initial prompt",
+                type: "string",
+              }),
+              language: z.string().optional().openapi({
+                description: "Language",
+                type: "string",
+              }),
+              prefix: z.string().optional().openapi({
+                description: "Prefix",
+                type: "string",
+              }),
             }),
           },
         },
@@ -48,12 +60,18 @@ const app = new OpenAPIHono<{ Bindings: Bindings }>().openapi(
     const body = await c.req.parseBody();
     const file = body.file as File;
 
+    const initialPrompt = body.initial_prompt as string | undefined;
+    const prefix = body.prefix as string | undefined;
+    const language = body.language as string | undefined;
+
     const buffer = await file.arrayBuffer();
     const base64Audio = arrayBufferToBase64(buffer);
 
     const result = await c.env.AI.run("@cf/openai/whisper-large-v3-turbo", {
       audio: base64Audio,
-      language: "pt",
+      language,
+      initial_prompt: initialPrompt,
+      prefix,
     });
 
     return c.json({ text: result.text }, 200);
